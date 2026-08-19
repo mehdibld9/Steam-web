@@ -16,8 +16,9 @@ const Leaderboard = lazy(() => import("./pages/leaderboard"));
 const AccountDetail = lazy(() => import("./pages/account-detail"));
 const Profile = lazy(() => import("./pages/profile"));
 const Submit = lazy(() => import("./pages/submit"));
-const Earn = lazy(() => import("./pages/earn"));
 const Login = lazy(() => import("./pages/login"));
+const Faq = lazy(() => import("./pages/faq"));
+const Terms = lazy(() => import("./pages/terms"));
 const Register = lazy(() => import("./pages/register"));
 const Giveaways = lazy(() => import("./pages/giveaways"));
 const ForgotPassword = lazy(() => import("./pages/forgot-password"));
@@ -137,7 +138,8 @@ function Router() {
         <Route path="/accounts/:id" component={AccountDetail} />
         <Route path="/profile/:id" component={Profile} />
         <Route path="/submit" component={Submit} />
-        <Route path="/earn" component={Earn} />
+        <Route path="/faq" component={Faq} />
+        <Route path="/terms" component={Terms} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/giveaways" component={Giveaways} />

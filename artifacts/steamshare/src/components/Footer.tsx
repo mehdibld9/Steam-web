@@ -10,7 +10,6 @@ import {
   Gift,
   Trophy,
   Megaphone,
-  Coins,
 } from "lucide-react";
 
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -30,17 +29,14 @@ export default function Footer(): JSX.Element {
 
   return (
     <footer className="border-t border-border bg-card/50">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Column 1: Brand */}
           <div>
             <div className="flex items-center gap-3 mb-3">
               <Gamepad className="w-6 h-6 text-indigo-400" />
               <h3 className="text-white text-lg font-semibold">Steam Family</h3>
             </div>
-            <p className="text-sm text-muted-foreground">
-              The premier platform for sharing Steam accounts securely. Discover new games and build your library together.
-            </p>
           </div>
 
           {/* Column 2: Quick Links */}
@@ -55,11 +51,6 @@ export default function Footer(): JSX.Element {
               <li>
                 <a href="/submit" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition">
                   <PlusCircle className="w-4 h-4 text-indigo-300" /> Submit Account
-                </a>
-              </li>
-              <li>
-                <a href="/earn" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition">
-                  <Coins className="w-4 h-4 text-indigo-300" /> Earn Coins
                 </a>
               </li>
               <li>
@@ -123,11 +114,11 @@ export default function Footer(): JSX.Element {
 
         <div className="border-t border-border my-8" />
 
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <span className="text-sm uppercase tracking-wider text-muted-foreground">Follow Us</span>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <a href="https://t.me/Steam_Family" aria-label="Telegram" target="_blank" rel="noopener noreferrer" className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
                 <Send className="w-5 h-5 text-sky-400" />
               </a>
@@ -150,8 +141,8 @@ export default function Footer(): JSX.Element {
             </div>
           </div>
 
-          <div className="mt-2 md:mt-0">
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+          <div className="mt-0">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
               <a href="/terms" className="hover:text-foreground transition">Terms & Rules</a>
               <a href="/faq" className="hover:text-foreground transition">FAQ</a>
               <a href="/premium" className="hover:text-foreground transition">Buy Pro</a>
