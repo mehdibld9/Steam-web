@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
 import { useLocation } from "wouter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -187,11 +187,13 @@ export default function EditProfile() {
     enabled: !!me,
   });
 
-  if (isLoading) return null;
-  if (!me) {
-    setLocation("/login");
-    return null;
-  }
+  useEffect(() => {
+    if (!isLoading && !me) {
+      setLocation("/login");
+    }
+  }, [isLoading, me, setLocation]);
+
+  if (isLoading || !me) return null;
 
   const isPremium = premiumStatus?.isActive && (premiumStatus.tier === "premium" || premiumStatus.tier === "pro");
   const isPro = premiumStatus?.isActive && premiumStatus.tier === "pro";
