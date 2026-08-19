@@ -33,13 +33,13 @@ export default function Footer(): JSX.Element {
 
   return (
     <footer className="border-t border-border bg-card text-foreground">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 lg:gap-8">
           <div>
-            <h3 className="mb-5 text-2xl font-extrabold tracking-tight text-white">
+            <h3 className="mb-3 text-lg font-extrabold tracking-tight text-white sm:text-xl">
               Steam Family
             </h3>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <ul className="space-y-2 text-[11px] text-slate-300 sm:text-xs">
               <li>
                 <a href="/browse" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <Search className={`${iconClasses} text-cyan-400`} />
@@ -55,7 +55,7 @@ export default function Footer(): JSX.Element {
               <li>
                 <a href="https://linktr.ee/mehdibld" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <Megaphone className={`${iconClasses} text-rose-400`} />
-                  Advertise with Us
+                  Advertise
                 </a>
               </li>
               <li>
@@ -68,8 +68,8 @@ export default function Footer(): JSX.Element {
           </div>
 
           <div>
-            <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">Features &amp; Store</h4>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <h4 className="mb-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-300 sm:text-[11px]">Features</h4>
+            <ul className="space-y-2 text-[11px] text-slate-300 sm:text-xs">
               <li>
                 <a href="/premium" className="inline-flex items-center gap-2 text-yellow-300 hover:text-yellow-200 transition-colors">
                   <Crown className={`${iconClasses}`} />
@@ -85,7 +85,7 @@ export default function Footer(): JSX.Element {
               <li>
                 <a href="/submit" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <PlusCircle className={`${iconClasses} text-blue-400`} />
-                  Submit an Account
+                  Submit Account
                 </a>
               </li>
               <li>
@@ -98,8 +98,8 @@ export default function Footer(): JSX.Element {
           </div>
 
           <div>
-            <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">Help &amp; Support</h4>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <h4 className="mb-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-300 sm:text-[11px]">Help &amp; Support</h4>
+            <ul className="space-y-2 text-[11px] text-slate-300 sm:text-xs">
               <li>
                 <a href="/faq" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <HelpCircle className={`${iconClasses} text-cyan-400`} />
@@ -128,18 +128,18 @@ export default function Footer(): JSX.Element {
           </div>
 
           <div>
-            <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">Community</h4>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <h4 className="mb-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-300 sm:text-[11px]">Community</h4>
+            <ul className="space-y-2 text-[11px] text-slate-300 sm:text-xs">
               <li>
                 <a href="https://t.me/Steam_Family" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <Send className={`${iconClasses} text-sky-400`} />
-                  Telegram Channel
+                  Telegram
                 </a>
               </li>
               <li>
                 <a href="https://discord.gg/3w69MWQcuX" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <DiscordIcon className={`${iconClasses} text-violet-400`} />
-                  Discord Server
+                  Discord
                 </a>
               </li>
               <li>

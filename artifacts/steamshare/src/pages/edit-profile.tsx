@@ -400,31 +400,34 @@ export default function EditProfile() {
         </button>
         <h1 className="text-2xl font-black">Edit Profile</h1>
 
-        <div className="mb-6 flex items-center gap-2 rounded-xl border border-border bg-card p-1.5">
-          <button
-            type="button"
-            onClick={() => setActiveTab("customization")}
-            className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${activeTab === "customization" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-          >
-            <span className="inline-flex items-center gap-2"><User className="h-4 w-4" /> Customization</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("security")}
-            className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${activeTab === "security" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-          >
-            <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Security</span>
-          </button>
+        <div className="mb-6 flex justify-center">
+          <div className="inline-flex w-full max-w-md items-center gap-2 rounded-xl border border-border bg-card p-1.5 shadow-sm">
+            <button
+              type="button"
+              onClick={() => setActiveTab("customization")}
+              className={`flex-1 rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${activeTab === "customization" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <span className="inline-flex items-center justify-center gap-2"><User className="h-4 w-4" /> Customization</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("security")}
+              className={`flex-1 rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${activeTab === "security" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              <span className="inline-flex items-center justify-center gap-2"><ShieldCheck className="h-4 w-4" /> Security</span>
+            </button>
+          </div>
         </div>
 
-        <div className={activeTab === "customization" ? "grid gap-6 xl:grid-cols-[1.15fr_0.85fr]" : "hidden"}>
-          <div className="space-y-6">
-            <div className="bg-card border border-border rounded-xl p-6 space-y-5">
-              <div className="flex items-center justify-between gap-3">
-                <h2 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-                  <User className="h-4 w-4" /> Customization
-                </h2>
-              </div>
+        {activeTab === "customization" && (
+          <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+            <div className="space-y-6">
+              <div className="bg-card border border-border rounded-xl p-6 space-y-5">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                    <User className="h-4 w-4" /> Customization
+                  </h2>
+                </div>
 
               <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
                 <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
@@ -791,8 +794,10 @@ export default function EditProfile() {
               </div>
             )}
           </div>
+        )}
 
-          <div className={activeTab === "security" ? "space-y-6" : "hidden"}>
+        {activeTab === "security" && (
+          <div className="space-y-6">
             <div className="bg-card border border-border rounded-xl p-6 space-y-5">
               <h2 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
                 <ShieldCheck className="h-4 w-4" /> Security
@@ -907,7 +912,7 @@ export default function EditProfile() {
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
