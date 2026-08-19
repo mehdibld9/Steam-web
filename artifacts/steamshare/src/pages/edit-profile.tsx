@@ -414,7 +414,7 @@ export default function EditProfile() {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-10 max-w-5xl space-y-6">
+      <div className="container mx-auto px-4 py-10 max-w-5xl space-y-6 overflow-x-hidden">
         <button onClick={() => window.history.back()} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-4 w-4" /> Back
         </button>
@@ -449,11 +449,11 @@ export default function EditProfile() {
                   </h2>
                 </div>
 
-                <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
+                <div className="bg-muted/20 border border-border rounded-xl p-4 sm:p-5 space-y-4 sm:space-y-5">
                   <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
                     <User className="h-4 w-4" /> Display Name
                   </h3>
-                  <p className="text-xs text-muted-foreground -mt-2">
+                  <p className="text-xs leading-relaxed text-muted-foreground -mt-2 break-words">
                     This is the name others see on your profile. Your login username (<strong className="text-foreground">{me.username}</strong>) stays the same.
                   </p>
                   <div className="space-y-2">
@@ -470,7 +470,7 @@ export default function EditProfile() {
                       </p>
                     )}
                     {displayedDisplayName && !isBadWord && (
-                      <p className="text-xs text-muted-foreground">Preview: <span className="text-foreground font-medium">{displayedDisplayName}</span></p>
+                      <p className="text-xs text-muted-foreground break-words">Preview: <span className="text-foreground font-medium">{displayedDisplayName}</span></p>
                     )}
                   </div>
                   <Button
@@ -482,20 +482,20 @@ export default function EditProfile() {
                   </Button>
                 </div>
 
-                <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
+                <div className="bg-muted/20 border border-border rounded-xl p-4 sm:p-5 space-y-4 sm:space-y-5">
                   <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
                     <Camera className="h-4 w-4" /> Profile Picture
                   </h3>
 
-                  <div className="flex items-center gap-5">
-                    <Avatar className="h-20 w-20 border-2 border-border shrink-0">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+                    <Avatar className="h-20 w-20 border-2 border-border shrink-0 self-center sm:self-auto">
                       <AvatarImage src={previewUrl} />
                       <AvatarFallback className="text-2xl bg-secondary">
                         {(me.username?.substring(0, 2) ?? "").toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex-1 space-y-2">
-                      <p className="text-xs text-muted-foreground">Paste an image URL to set your profile picture.</p>
+                    <div className="min-w-0 flex-1 space-y-2">
+                      <p className="text-xs leading-relaxed text-muted-foreground break-words">Paste an image URL to set your profile picture.</p>
                       <Input
                         placeholder="https://example.com/avatar.jpg"
                         value={avatarUrl}
@@ -504,11 +504,11 @@ export default function EditProfile() {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2 sm:flex-row">
                     <Button
                       onClick={handleAvatarSave}
                       disabled={!avatarUrl || avatarLoading}
-                      className="flex-1"
+                      className="w-full sm:flex-1"
                     >
                       {avatarLoading ? "Saving..." : "Save Picture"}
                     </Button>
@@ -517,7 +517,7 @@ export default function EditProfile() {
                         variant="outline"
                         onClick={handleRemoveAvatar}
                         disabled={avatarLoading}
-                        className="text-destructive border-destructive/30 hover:bg-destructive/10"
+                        className="w-full sm:w-auto text-destructive border-destructive/30 hover:bg-destructive/10"
                       >
                         Remove
                       </Button>
