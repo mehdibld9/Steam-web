@@ -203,6 +203,11 @@ router.post("/", requireAuth, async (req, res) => {
 
   const userId = req.session.userId!;
   const { title, description, games, pointsCost, steamUsername, steamPassword, unlockMethod } = parsed.data as typeof parsed.data & { unlockMethod?: string };
+  const normalizedPointsCost = Math.max(0, Math.min(5, Math.floor(Number(pointsCost))));
+  if (Number(pointsCost) !== normalizedPointsCost) {
+    res.status(400).json({ error: "Points cost must be between 0 and 5." });
+    return;
+  }
   const isVipUnlock = unlockMethod === "vip";
   const safeUnlockMethod = ["login", "like", "comment"].includes(unlockMethod ?? "") ? (unlockMethod as "login" | "like" | "comment") : "login";
 
@@ -236,7 +241,7 @@ router.post("/", requireAuth, async (req, res) => {
 
   const [account] = await db
     .insert(accountsTable)
-    .values({ userId, title: filteredTitle, description: filteredDescription, games, pointsCost, steamUsername, steamPassword, unlockMethod: safeUnlockMethod, status, isAvailable, customButtonEnabled, customButtonLabel, customButtonUrl, vipOnly })
+    .values({ userId, title: filteredTitle, description: filteredDescription, games, pointsCost: normalizedPointsCost, steamUsername, steamPassword, unlockMethod: safeUnlockMethod, status, isAvailable, customButtonEnabled, customButtonLabel, customButtonUrl, vipOnly })
     .returning();
 
   // Only award XP and points immediately for instantly published accounts
@@ -411,7 +416,12 @@ router.patch("/:accountId", requireAuth, async (req, res) => {
       res.status(403).json({ error: "Cannot change price after the account has been claimed" });
       return;
     }
-    updates.pointsCost = Math.max(0, Math.floor(Number(pointsCost)));
+    const nextCost = Math.max(0, Math.min(5, Math.floor(Number(pointsCost))));
+    if (Number(pointsCost) !== nextCost) {
+      res.status(400).json({ error: "Points cost must be between 0 and 5." });
+      return;
+    }
+    updates.pointsCost = nextCost;
   }
   // Admin-only fields
   if (isAdmin) {
@@ -478,8 +488,8 @@ router.post("/:accountId/claim", requireAuth, async (req, res) => {
     user.premiumExpiresAt !== null &&
     new Date(user.premiumExpiresAt) > new Date();
 
-  // Enforce unlock method (skipped for pro users)
-  if (!isProActive) {
+  // Paid listings bypass like/comment unlock gates; free listings still honor them.
+  if (account.pointsCost <= 0 && !isProActive) {
     const unlockMethod = account.unlockMethod ?? "login";
     if (unlockMethod === "like") {
       const [like] = await db.select().from(likesTable)

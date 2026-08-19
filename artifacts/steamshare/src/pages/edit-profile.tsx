@@ -152,9 +152,14 @@ export default function EditProfile() {
   const [passwordCodeSent, setPasswordCodeSent] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
 
+  // Settings tabs
+  const [activeTab, setActiveTab] = useState<"customization" | "security">("customization");
+
   // Delete account
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
+  const [deleteCode, setDeleteCode] = useState("");
+  const [deleteNeeds2fa, setDeleteNeeds2fa] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   // Premium prefs
@@ -331,12 +336,24 @@ export default function EditProfile() {
         method: "DELETE",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: deletePassword }),
+        body: JSON.stringify({
+          password: deletePassword,
+          code: deleteNeeds2fa || !!me?.twoFactorEnabled ? deleteCode : undefined,
+        }),
       });
-      if (!res.ok) {
-        const e = await res.json().catch(() => ({}));
-        throw new Error(e.error || "Failed to delete account");
+      const data = await res.json().catch(() => ({}));
+
+      if (res.status === 202 || data.requiresTwoFactor) {
+        setDeleteNeeds2fa(true);
+        setDeleteCode("");
+        toast({ title: "Confirmation code sent", description: "Check your email to finish deleting your account." });
+        return;
       }
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to delete account");
+      }
+
       queryClient.clear();
       setLocation("/");
       toast({ title: "Account deleted" });
@@ -383,7 +400,24 @@ export default function EditProfile() {
         </button>
         <h1 className="text-2xl font-black">Edit Profile</h1>
 
-        <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <div className="mb-6 flex items-center gap-2 rounded-xl border border-border bg-card p-1.5">
+          <button
+            type="button"
+            onClick={() => setActiveTab("customization")}
+            className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${activeTab === "customization" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            <span className="inline-flex items-center gap-2"><User className="h-4 w-4" /> Customization</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("security")}
+            className={`flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${activeTab === "security" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Security</span>
+          </button>
+        </div>
+
+        <div className={activeTab === "customization" ? "grid gap-6 xl:grid-cols-[1.15fr_0.85fr]" : "hidden"}>
           <div className="space-y-6">
             <div className="bg-card border border-border rounded-xl p-6 space-y-5">
               <div className="flex items-center justify-between gap-3">
@@ -758,7 +792,7 @@ export default function EditProfile() {
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className={activeTab === "security" ? "space-y-6" : "hidden"}>
             <div className="bg-card border border-border rounded-xl p-6 space-y-5">
               <h2 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
                 <ShieldCheck className="h-4 w-4" /> Security
@@ -893,17 +927,30 @@ export default function EditProfile() {
               value={deletePassword}
               onChange={(e) => setDeletePassword(e.target.value)}
             />
+            {(deleteNeeds2fa || !!me?.twoFactorEnabled) && (
+              <div className="space-y-2">
+                <label className="text-xs text-muted-foreground">6-digit verification code</label>
+                <Input
+                  value={deleteCode}
+                  onChange={(e) => setDeleteCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  placeholder="000000"
+                  inputMode="numeric"
+                  maxLength={6}
+                  className="text-center text-2xl font-mono tracking-widest"
+                />
+              </div>
+            )}
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1" onClick={() => { setDeleteOpen(false); setDeletePassword(""); }}>
+              <Button variant="outline" className="flex-1" onClick={() => { setDeleteOpen(false); setDeletePassword(""); setDeleteCode(""); setDeleteNeeds2fa(false); }}>
                 Cancel
               </Button>
               <Button
                 variant="destructive"
                 className="flex-1"
-                disabled={!deletePassword || deleteLoading}
+                disabled={!deletePassword || deleteLoading || (!!me?.twoFactorEnabled && deleteNeeds2fa && deleteCode.length !== 6)}
                 onClick={handleDeleteAccount}
               >
-                {deleteLoading ? "Deleting..." : "Delete Forever"}
+                {deleteLoading ? "Deleting..." : deleteNeeds2fa ? "Confirm deletion" : "Delete Forever"}
               </Button>
             </div>
           </div>

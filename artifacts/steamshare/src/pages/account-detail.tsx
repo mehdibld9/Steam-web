@@ -535,7 +535,13 @@ export default function AccountDetail() {
                   <Input
                     type="number"
                     value={editCost}
-                    onChange={(e) => setEditCost(Number(e.target.value))}
+                    min={0}
+                    max={5}
+                    onChange={(e) =>
+                      setEditCost(
+                        Math.min(5, Math.max(0, Number(e.target.value || 0))),
+                      )
+                    }
                     placeholder="Points cost"
                     min={0}
                   />
@@ -741,6 +747,11 @@ export default function AccountDetail() {
                           ? "Claim this account for free to reveal the Steam login."
                           : `Spend ${account.pointsCost} points to reveal the Steam login.`}
                       </p>
+                      {account.pointsCost > 0 && (
+                        <p className="text-[11px] text-amber-400">
+                          Paid listings bypass the like/comment unlock requirement.
+                        </p>
+                      )}
                     </div>
                     {(() => {
                       const method = (account as any).unlockMethod ?? "login";
@@ -771,6 +782,7 @@ export default function AccountDetail() {
                       const gateBlocked =
                         !isOwner &&
                         user &&
+                        account.pointsCost <= 0 &&
                         !isProActive &&
                         ((method === "like" && !account.userHasLiked) ||
                           (method === "comment" &&

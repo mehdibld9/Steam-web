@@ -474,16 +474,18 @@ router.post("/change-password/confirm", requireAuth, async (req, res) => {
 
 // Delete own account
 router.delete("/account", requireAuth, async (req, res) => {
-  const { password } = req.body;
+  const { password, code } = req.body ?? {};
   if (!password) {
     res.status(400).json({ error: "Password required to delete account" });
     return;
   }
+
   const [user] = await db.select().from(usersTable).where(eq(usersTable.id, req.session.userId!)).limit(1);
   if (!user) {
     res.status(404).json({ error: "User not found" });
     return;
   }
+
   // Banned users cannot delete their account to evade bans
   if (user.isBanned) {
     const isActiveBan = !user.banExpiresAt || new Date() < new Date(user.banExpiresAt);
@@ -492,11 +494,65 @@ router.delete("/account", requireAuth, async (req, res) => {
       return;
     }
   }
+
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) {
     res.status(401).json({ error: "Incorrect password" });
     return;
   }
+
+  if (user.twoFactorEnabled) {
+    const sixDigitCode = typeof code === "string" ? code.trim() : "";
+
+    if (!sixDigitCode) {
+      const verificationCode = createVerificationCode();
+      const codeHash = await bcrypt.hash(verificationCode, 10);
+      const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+      await db.update(usersTable)
+        .set({ twoFactorCode: codeHash, twoFactorCodeExpiresAt: expiresAt })
+        .where(eq(usersTable.id, user.id));
+
+      try {
+        await sendEmail(user.email, "Confirm account deletion", twoFactorEmailHtml(verificationCode, user.username));
+      } catch (emailErr: any) {
+        const message = emailErr?.message ?? "";
+        res.status(500).json({
+          error: message.includes("SMTP is not configured")
+            ? "Email delivery is not configured. Contact an administrator."
+            : "We couldn't send the confirmation code. Please try again.",
+        });
+        return;
+      }
+
+      res.status(202).json({ requiresTwoFactor: true, email: user.email });
+      return;
+    }
+
+    if (!/^\d{6}$/.test(sixDigitCode)) {
+      res.status(400).json({ error: "Enter the 6-digit confirmation code." });
+      return;
+    }
+
+    const codeMatches = user.twoFactorCode
+      ? await bcrypt.compare(sixDigitCode, user.twoFactorCode).catch(() => false)
+      : false;
+
+    if (!codeMatches) {
+      res.status(401).json({ error: "Incorrect confirmation code." });
+      return;
+    }
+
+    if (!user.twoFactorCodeExpiresAt || new Date() > new Date(user.twoFactorCodeExpiresAt)) {
+      res.status(401).json({ error: "Confirmation code expired. Please try again." });
+      return;
+    }
+
+    await db.update(usersTable)
+      .set({ twoFactorCode: null, twoFactorCodeExpiresAt: null })
+      .where(eq(usersTable.id, user.id));
+  }
+
   await db.delete(usersTable).where(eq(usersTable.id, user.id));
   req.session.destroy(() => {
     res.clearCookie("connect.sid", { path: "/" });

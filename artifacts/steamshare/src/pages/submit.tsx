@@ -19,7 +19,7 @@ const formSchema = z.object({
   title: z.string().min(3).max(100),
   description: z.string().max(1000),
   gamesList: z.string().min(1, "At least one game is required"),
-  pointsCost: z.coerce.number().min(0),
+  pointsCost: z.coerce.number().min(0).max(5),
   steamUsername: z.string().min(1, "Steam username is required"),
   steamPassword: z.string().min(1, "Steam password is required"),
   unlockMethod: z.enum(["login", "like", "comment", "vip"]).default("login"),
@@ -312,8 +312,19 @@ export default function Submit() {
                 <FormField control={form.control} name="pointsCost" render={({ field }) => (
                   <FormItem>
                     <FormLabel>Points Cost (0 = Free)</FormLabel>
-                    <FormControl><Input type="number" min={0} {...field} /></FormControl>
-                    <FormDescription>Set to 0 to offer the account for free.</FormDescription>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={5}
+                        value={field.value}
+                        onChange={(e) => {
+                          const next = Number(e.target.value || 0);
+                          field.onChange(Math.min(5, Math.max(0, Number.isFinite(next) ? next : 0)));
+                        }}
+                      />
+                    </FormControl>
+                    <FormDescription>Set to 0 to offer the account for free. Paid listings bypass like/comment unlock gates and the price cap is 5 points.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )} />
