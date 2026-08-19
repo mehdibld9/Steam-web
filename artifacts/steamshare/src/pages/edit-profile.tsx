@@ -429,84 +429,84 @@ export default function EditProfile() {
                   </h2>
                 </div>
 
-              <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
-                <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-                  <User className="h-4 w-4" /> Display Name
-                </h3>
-                <p className="text-xs text-muted-foreground -mt-2">
-                  This is the name others see on your profile. Your login username (<strong className="text-foreground">{me.username}</strong>) stays the same.
-                </p>
-                <div className="space-y-2">
-                  <Input
-                    placeholder={currentDisplayName || "Enter a display name…"}
-                    value={displayName}
-                    onChange={(e) => setDisplayName(e.target.value)}
-                    maxLength={30}
-                    className={isBadWord ? "border-destructive focus:border-destructive" : ""}
-                  />
-                  {isBadWord && (
-                    <p className="text-xs text-destructive flex items-center gap-1">
-                      <AlertTriangle className="h-3 w-3" /> This name contains inappropriate content.
-                    </p>
-                  )}
-                  {displayedDisplayName && !isBadWord && (
-                    <p className="text-xs text-muted-foreground">Preview: <span className="text-foreground font-medium">{displayedDisplayName}</span></p>
-                  )}
-                </div>
-                <Button
-                  onClick={handleDisplayNameSave}
-                  disabled={!displayName.trim() || isBadWord || displayNameLoading}
-                  className="w-full"
-                >
-                  {displayNameLoading ? "Saving…" : "Save Display Name"}
-                </Button>
-              </div>
-
-              <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
-                <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-                  <Camera className="h-4 w-4" /> Profile Picture
-                </h3>
-
-                <div className="flex items-center gap-5">
-                  <Avatar className="h-20 w-20 border-2 border-border shrink-0">
-                    <AvatarImage src={previewUrl} />
-                    <AvatarFallback className="text-2xl bg-secondary">
-                      {(me.username?.substring(0, 2) ?? "").toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 space-y-2">
-                    <p className="text-xs text-muted-foreground">Paste an image URL to set your profile picture.</p>
+                <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
+                  <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                    <User className="h-4 w-4" /> Display Name
+                  </h3>
+                  <p className="text-xs text-muted-foreground -mt-2">
+                    This is the name others see on your profile. Your login username (<strong className="text-foreground">{me.username}</strong>) stays the same.
+                  </p>
+                  <div className="space-y-2">
                     <Input
-                      placeholder="https://example.com/avatar.jpg"
-                      value={avatarUrl}
-                      onChange={(e) => setAvatarUrl(e.target.value)}
+                      placeholder={currentDisplayName || "Enter a display name…"}
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      maxLength={30}
+                      className={isBadWord ? "border-destructive focus:border-destructive" : ""}
                     />
+                    {isBadWord && (
+                      <p className="text-xs text-destructive flex items-center gap-1">
+                        <AlertTriangle className="h-3 w-3" /> This name contains inappropriate content.
+                      </p>
+                    )}
+                    {displayedDisplayName && !isBadWord && (
+                      <p className="text-xs text-muted-foreground">Preview: <span className="text-foreground font-medium">{displayedDisplayName}</span></p>
+                    )}
                   </div>
+                  <Button
+                    onClick={handleDisplayNameSave}
+                    disabled={!displayName.trim() || isBadWord || displayNameLoading}
+                    className="w-full"
+                  >
+                    {displayNameLoading ? "Saving…" : "Save Display Name"}
+                  </Button>
                 </div>
 
-                <div className="flex gap-2">
-                  <Button
-                    onClick={handleAvatarSave}
-                    disabled={!avatarUrl || avatarLoading}
-                    className="flex-1"
-                  >
-                    {avatarLoading ? "Saving..." : "Save Picture"}
-                  </Button>
-                  {me.avatarUrl && (
+                <div className="bg-muted/20 border border-border rounded-xl p-5 space-y-5">
+                  <h3 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                    <Camera className="h-4 w-4" /> Profile Picture
+                  </h3>
+
+                  <div className="flex items-center gap-5">
+                    <Avatar className="h-20 w-20 border-2 border-border shrink-0">
+                      <AvatarImage src={previewUrl} />
+                      <AvatarFallback className="text-2xl bg-secondary">
+                        {(me.username?.substring(0, 2) ?? "").toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-2">
+                      <p className="text-xs text-muted-foreground">Paste an image URL to set your profile picture.</p>
+                      <Input
+                        placeholder="https://example.com/avatar.jpg"
+                        value={avatarUrl}
+                        onChange={(e) => setAvatarUrl(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
                     <Button
-                      variant="outline"
-                      onClick={handleRemoveAvatar}
-                      disabled={avatarLoading}
-                      className="text-destructive border-destructive/30 hover:bg-destructive/10"
+                      onClick={handleAvatarSave}
+                      disabled={!avatarUrl || avatarLoading}
+                      className="flex-1"
                     >
-                      Remove
+                      {avatarLoading ? "Saving..." : "Save Picture"}
                     </Button>
-                  )}
+                    {me.avatarUrl && (
+                      <Button
+                        variant="outline"
+                        onClick={handleRemoveAvatar}
+                        disabled={avatarLoading}
+                        className="text-destructive border-destructive/30 hover:bg-destructive/10"
+                      >
+                        Remove
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* ── Premium Customization ── */}
             {isPremium ? (
               <div className="bg-card border border-yellow-500/30 rounded-xl p-6 space-y-5">
                 <h2 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wide text-yellow-400">
@@ -519,7 +519,6 @@ export default function EditProfile() {
                   )}
                 </p>
 
-                {/* Name Color */}
                 <div className="space-y-3">
                   <label className="text-sm font-medium flex items-center gap-2">
                     <Palette className="h-4 w-4" /> Name Color
@@ -538,85 +537,46 @@ export default function EditProfile() {
                         : c.hex === "sunset" ? "sunset-swatch"
                         : c.hex === "ice" ? "ice-swatch"
                         : c.hex === "toxic" ? "toxic-swatch"
-                        : c.hex === "rose" ? "rose-swatch"
-                        : c.hex === "lava" ? "lava-swatch"
                         : "";
+
                       return (
                         <button
                           key={c.hex}
-                          title={isProOnly ? `${c.label} — Pro only` : c.label}
+                          type="button"
                           onClick={() => !isProOnly && handlePremiumPref({ nameColor: c.hex })}
-                          disabled={prefLoading || isProOnly}
-                          className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 ${isProOnly ? "opacity-30 cursor-not-allowed" : ""} ${swatchClass}`}
-                          style={c.animated ? {
-                            borderColor: isSelected ? "#fff" : "transparent",
-                            boxShadow: isSelected ? "0 0 0 2px rgba(255,255,255,0.5)" : undefined,
-                          } : {
-                            backgroundColor: c.hex,
-                            borderColor: isSelected ? "#fff" : "transparent",
-                            boxShadow: isSelected ? "0 0 0 2px rgba(255,255,255,0.5)" : undefined,
-                          }}
-                        />
+                          disabled={isProOnly || prefLoading}
+                          className={`relative flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all ${
+                            isSelected ? "border-white ring-2 ring-white/30" : "border-transparent"
+                          } ${isProOnly ? "opacity-40 cursor-not-allowed" : "hover:scale-105"}`}
+                          title={c.label}
+                        >
+                          <span
+                            className={`block h-7 w-7 rounded-full ${swatchClass}`}
+                            style={!swatchClass ? { backgroundColor: c.hex } : undefined}
+                          />
+                          {isSelected && (
+                            <Check className="absolute h-3.5 w-3.5 text-white" />
+                          )}
+                        </button>
                       );
                     })}
-                    {premiumStatus?.nameColor && (
-                      <button
-                        onClick={() => handlePremiumPref({ nameColor: null })}
-                        disabled={prefLoading}
-                        className="w-8 h-8 rounded-full border-2 border-border text-muted-foreground hover:text-foreground flex items-center justify-center text-xs transition-colors"
-                        title="Remove color"
-                      >
-                        ✕
-                      </button>
-                    )}
                   </div>
-                  {premiumStatus?.nameColor && (
-                    <p className="text-xs text-muted-foreground">
-                      Preview:{" "}
-                      {premiumStatus.nameColor === "rainbow" ? (
-                        <span className="rainbow-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "fire" ? (
-                        <span className="fire-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "ocean" ? (
-                        <span className="ocean-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "galaxy" ? (
-                        <span className="galaxy-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "neon" ? (
-                        <span className="neon-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "gold" ? (
-                        <span className="gold-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "aurora" ? (
-                        <span className="aurora-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "sunset" ? (
-                        <span className="sunset-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "ice" ? (
-                        <span className="ice-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "toxic" ? (
-                        <span className="toxic-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "rose" ? (
-                        <span className="rose-text font-semibold">{me.username}</span>
-                      ) : premiumStatus.nameColor === "lava" ? (
-                        <span className="lava-text font-semibold">{me.username}</span>
-                      ) : (
-                        <span style={{ color: premiumStatus.nameColor }} className="font-semibold">{me.username}</span>
-                      )}
-                    </p>
-                  )}
                 </div>
 
-                {/* Badge */}
                 <div className="space-y-3">
-                  <label className="text-sm font-medium">Badge</label>
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <BadgeCheck className="h-4 w-4" /> Badge
+                  </label>
                   <div className="flex flex-wrap gap-2">
                     {BADGE_OPTIONS.map((opt) => {
-                      const isProRequired = opt.pro && !isPro;
                       const isSelected = premiumStatus?.badgeType === opt.key;
+                      const isProRequired = opt.pro && !isPro;
                       return (
                         <button
                           key={opt.key}
-                          title={isProRequired ? `${opt.label} requires Pro` : opt.label}
+                          type="button"
                           onClick={() => !isProRequired && handlePremiumPref({ badgeType: opt.key })}
-                          disabled={prefLoading || isProRequired}
+                          disabled={isProRequired || prefLoading}
                           className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition-all
                             ${isSelected ? "border-yellow-500 bg-yellow-500/10 text-yellow-300" : "border-border hover:border-yellow-500/40"}
                             ${isProRequired ? "opacity-40 cursor-not-allowed" : ""}
@@ -640,7 +600,6 @@ export default function EditProfile() {
                   </div>
                 </div>
 
-                {/* Custom Icon Badge — Pro only */}
                 <div className={`space-y-3 border-t border-border pt-4 ${!isPro ? "opacity-30 pointer-events-none select-none" : ""}`}>
                   <label className="text-sm font-medium flex items-center gap-2">
                     <ImageIcon className="h-4 w-4 text-blue-400" />
@@ -737,9 +696,7 @@ export default function EditProfile() {
                   Upgrade to Premium or Pro to unlock these customizations.
                 </p>
 
-                {/* Faded preview — non-interactive */}
                 <div className="opacity-40 pointer-events-none select-none space-y-5">
-                  {/* Name Color preview */}
                   <div className="space-y-3">
                     <label className="text-sm font-medium flex items-center gap-2">
                       <Palette className="h-4 w-4" /> Name Color
@@ -769,7 +726,6 @@ export default function EditProfile() {
                     </div>
                   </div>
 
-                  {/* Badge preview */}
                   <div className="space-y-3">
                     <label className="text-sm font-medium">Badge</label>
                     <div className="flex flex-wrap gap-2">
