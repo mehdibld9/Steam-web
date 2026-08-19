@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Gamepad,
   Search,
   PlusCircle,
   Crown,
@@ -10,6 +9,9 @@ import {
   Gift,
   Trophy,
   Megaphone,
+  FileText,
+  ShoppingBag,
+  ChevronRight,
 } from "lucide-react";
 
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -24,135 +26,172 @@ const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const iconClasses = "w-4 h-4 shrink-0";
+
 export default function Footer(): JSX.Element {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-card/50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {/* Column 1: Brand */}
+    <footer className="border-t border-[#142638] bg-[#081827] text-[#dfeaf7]">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <Gamepad className="w-6 h-6 text-indigo-400" />
-              <h3 className="text-white text-lg font-semibold">Steam Family</h3>
-            </div>
-          </div>
-
-          {/* Column 2: Quick Links */}
-          <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Quick Links</h4>
-            <ul className="space-y-3">
+            <h3 className="mb-5 text-2xl font-extrabold tracking-tight text-white">
+              Steam Family
+            </h3>
+            <ul className="space-y-3 text-sm text-slate-300">
               <li>
-                <a href="/browse" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition">
-                  <Search className="w-4 h-4 text-indigo-300" /> Browse Accounts
+                <a href="/browse" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Search className={`${iconClasses} text-cyan-400`} />
+                  Explore Accounts
                 </a>
               </li>
               <li>
-                <a href="/submit" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition">
-                  <PlusCircle className="w-4 h-4 text-indigo-300" /> Submit Account
+                <a href="/terms" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <FileText className={`${iconClasses} text-sky-400`} />
+                  Terms &amp; Rules
                 </a>
               </li>
               <li>
-                <a href="/premium" className="flex items-center gap-3 text-yellow-300 hover:text-foreground transition">
-                  <Crown className="w-4 h-4" /> Premium
+                <a href="https://linktr.ee/mehdibld" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Megaphone className={`${iconClasses} text-rose-400`} />
+                  Advertise with Us
+                </a>
+              </li>
+              <li>
+                <a href="mailto:contact@steamfamily.xyz" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Mail className={`${iconClasses} text-emerald-400`} />
+                  Contact Us
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Support */}
           <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Support</h4>
-            <ul className="space-y-3 text-muted-foreground">
+            <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">Features &amp; Store</h4>
+            <ul className="space-y-3 text-sm text-slate-300">
               <li>
-                <a href="/faq" className="flex items-center gap-3 hover:text-foreground transition">
-                  <HelpCircle className="w-4 h-4 text-teal-300" /> FAQ
+                <a href="/premium" className="inline-flex items-center gap-2 text-yellow-300 hover:text-yellow-200 transition-colors">
+                  <Crown className={`${iconClasses}`} />
+                  Buy Pro
                 </a>
               </li>
               <li>
-                <a href="/faq" className="hover:text-foreground transition">Launcher Bypasses</a>
+                <a href="/browse" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <ShoppingBag className={`${iconClasses} text-violet-400`} />
+                  Shared Libraries
+                </a>
               </li>
               <li>
-                <a href="/faq" className="hover:text-foreground transition">Steam Error Codes</a>
+                <a href="/submit" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <PlusCircle className={`${iconClasses} text-blue-400`} />
+                  Submit an Account
+                </a>
               </li>
               <li>
-                <a href="mailto:contact@steamfamily.xyz" className="flex items-center gap-3 hover:text-foreground transition">
-                  <Mail className="w-4 h-4 text-emerald-400" /> contact@steamfamily.xyz
+                <a href="/store" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <ShoppingBag className={`${iconClasses} text-emerald-400`} />
+                  Digital Store
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Community */}
           <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Community</h4>
-            <ul className="space-y-3 text-muted-foreground">
+            <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">Help &amp; Support</h4>
+            <ul className="space-y-3 text-sm text-slate-300">
               <li>
-                <a href="https://t.me/Steam_Family" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-foreground transition">
-                  <Send className="w-4 h-4 text-sky-400" /> Telegram Channel
+                <a href="/faq" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <HelpCircle className={`${iconClasses} text-cyan-400`} />
+                  FAQ
                 </a>
               </li>
               <li>
-                <a href="https://discord.gg/3w69MWQcuX" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-foreground transition">
-                  <DiscordIcon className="w-4 h-4 text-indigo-400" /> Discord Server
+                <a href="/faq" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <ChevronRight className={`${iconClasses} text-slate-400`} />
+                  Launcher Bypasses
                 </a>
               </li>
               <li>
-                <a href="/giveaways" className="flex items-center gap-3 hover:text-foreground transition">
-                  <Gift className="w-4 h-4 text-green-300" /> Giveaways
+                <a href="/faq" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <ChevronRight className={`${iconClasses} text-slate-400`} />
+                  Steam Error Codes
                 </a>
               </li>
               <li>
-                <a href="/leaderboard" className="flex items-center gap-3 hover:text-foreground transition">
-                  <Trophy className="w-4 h-4 text-yellow-400" /> Leaderboard
+                <a href="mailto:contact@steamfamily.xyz" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Mail className={`${iconClasses} text-emerald-400`} />
+                  contact@steamfamily.xyz
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">Community</h4>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li>
+                <a href="https://t.me/Steam_Family" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Send className={`${iconClasses} text-sky-400`} />
+                  Telegram Channel
+                </a>
+              </li>
+              <li>
+                <a href="https://discord.gg/3w69MWQcuX" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <DiscordIcon className={`${iconClasses} text-violet-400`} />
+                  Discord Server
+                </a>
+              </li>
+              <li>
+                <a href="/giveaways" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Gift className={`${iconClasses} text-emerald-400`} />
+                  Giveaways
+                </a>
+              </li>
+              <li>
+                <a href="/leaderboard" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                  <Trophy className={`${iconClasses} text-yellow-400`} />
+                  Leaderboard
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border my-8" />
-
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <span className="text-sm uppercase tracking-wider text-muted-foreground">Follow Us</span>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <a href="https://t.me/Steam_Family" aria-label="Telegram" target="_blank" rel="noopener noreferrer" className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
-                <Send className="w-5 h-5 text-sky-400" />
-              </a>
-
-              <a href="https://discord.gg/3w69MWQcuX" aria-label="Discord" target="_blank" rel="noopener noreferrer" className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
-                <DiscordIcon className="w-5 h-5 text-indigo-400" />
-              </a>
-
-              <a href="mailto:contact@steamfamily.xyz" aria-label="Email" className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
-                <Mail className="w-5 h-5 text-emerald-400" />
-              </a>
-
-              <a href="https://linktr.ee/mehdibld" aria-label="Advertise" target="_blank" rel="noopener noreferrer" className="p-2 rounded-md border border-gray-700 hover:bg-gray-800 transition">
-                <Megaphone className="w-5 h-5 text-rose-400" />
-              </a>
-
-              <a href="/premium" aria-label="Buy Pro" className="p-2 rounded-md border border-yellow-600 bg-yellow-600/10 hover:bg-yellow-600 hover:text-black transition">
-                <Crown className="w-5 h-5 text-yellow-400" />
-              </a>
+        <div className="mt-10 border-t border-[#20324a] pt-7">
+          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-300">Follow Us</span>
+              <div className="flex items-center gap-3">
+                <a href="https://t.me/Steam_Family" aria-label="Telegram" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 bg-slate-900/40 text-sky-400 transition hover:border-sky-400 hover:text-sky-300">
+                  <Send className="h-4 w-4" />
+                </a>
+                <a href="https://discord.gg/3w69MWQcuX" aria-label="Discord" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 bg-slate-900/40 text-violet-400 transition hover:border-violet-400 hover:text-violet-300">
+                  <DiscordIcon className="h-4 w-4" />
+                </a>
+                <a href="mailto:contact@steamfamily.xyz" aria-label="Email" className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 bg-slate-900/40 text-emerald-400 transition hover:border-emerald-400 hover:text-emerald-300">
+                  <Mail className="h-4 w-4" />
+                </a>
+                <a href="https://linktr.ee/mehdibld" aria-label="Advertise" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-700 bg-slate-900/40 text-rose-400 transition hover:border-rose-400 hover:text-rose-300">
+                  <Megaphone className="h-4 w-4" />
+                </a>
+                <a href="/premium" aria-label="Buy Pro" className="flex h-10 w-10 items-center justify-center rounded-md border border-yellow-500/70 bg-yellow-500/10 text-yellow-300 transition hover:bg-yellow-400 hover:text-black">
+                  <Crown className="h-4 w-4" />
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-0">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-              <a href="/terms" className="hover:text-foreground transition">Terms & Rules</a>
-              <a href="/faq" className="hover:text-foreground transition">FAQ</a>
-              <a href="/premium" className="hover:text-foreground transition">Buy Pro</a>
-              <a href="mailto:contact@steamfamily.xyz" className="hover:text-foreground transition">contact@steamfamily.xyz</a>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-300">
+              <a href="/terms" className="hover:text-white transition-colors">Terms &amp; Rules</a>
+              <a href="/faq" className="hover:text-white transition-colors">FAQ</a>
+              <a href="/premium" className="hover:text-white transition-colors">Buy Pro</a>
+              <a href="mailto:contact@steamfamily.xyz" className="hover:text-white transition-colors">contact@steamfamily.xyz</a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-6">
-          <p className="text-center text-sm text-muted-foreground">© {year} Steam Family. All rights reserved.</p>
+        <div className="mt-8 border-t border-[#20324a] pt-6">
+          <p className="text-center text-sm text-slate-400">© {year} Steam Family. All rights reserved.</p>
         </div>
       </div>
     </footer>
