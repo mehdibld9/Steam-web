@@ -111,10 +111,10 @@ This can be caused by two things:
 2. Your IP was banned because you attempted too many accounts in a short amount of time.
 
 
-```
+\`\`\`
 Unfortunately, the first cause cannot be resolved, however you might try changing your IP address with a VPN to address the second.
 
-```
+\`\`\`
 
 
 ----------
