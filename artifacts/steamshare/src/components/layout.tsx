@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { useGetMe, getGetMeQueryKey, useLogout, useListGiveaways, getListGiveawaysQueryKey } from "@workspace/api-client-react";
+import { useGetMe, getGetMeQueryKey, useLogout } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
@@ -25,46 +25,6 @@ async function fetchUnreadCount(): Promise<number> {
   }
 }
 
-interface AppNotification {
-  id: number;
-  type: string;
-  actorUsername: string;
-  message: string;
-  linkUrl: string | null;
-  isRead: boolean;
-  createdAt: string;
-}
-
-async function fetchNotifications(): Promise<AppNotification[]> {
-  try {
-    const res = await fetch("/api/notifications", { credentials: "include" });
-    if (!res.ok) return [];
-    return res.json();
-  } catch {
-    return [];
-  }
-}
-
-async function fetchNotifUnreadCount(): Promise<number> {
-  try {
-    const res = await fetch("/api/notifications/unread/count", { credentials: "include" });
-    if (!res.ok) return 0;
-    const data = await res.json();
-    return data.count ?? 0;
-  } catch {
-    return 0;
-  }
-}
-
-const SEEN_GIVEAWAYS_KEY = "steamfamily_seen_giveaways";
-
-function markAllSeen(ids: number[]) {
-  try {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(SEEN_GIVEAWAYS_KEY, JSON.stringify(ids));
-    }
-  } catch {}
-}
 
 const NAV_ITEMS = [
   { href: "/", label: "Home", icon: Home },
@@ -90,55 +50,20 @@ export function Layout({ children, noFooter }: { children: React.ReactNode; noFo
   const { data: unreadCount = 0 } = useQuery({
     queryKey: ["unread-messages"],
     queryFn: fetchUnreadCount,
-    enabled: !!user,
-    refetchInterval: 120_000,
+    enabled: false,
+    refetchInterval: false,
   });
 
-  // Giveaway notifications — track unseen active giveaways
-  const { data: giveaways = [] } = useListGiveaways({
-    query: { queryKey: getListGiveawaysQueryKey(), refetchInterval: 300_000 },
-  });
-  const activeGiveaways = giveaways.filter((g) => g.isActive);
-  const [seenIds, setSeenIds] = useState<number[]>([]);
-
-  useEffect(() => {
-    try {
-      if (typeof window !== "undefined") {
-        const stored = localStorage.getItem(SEEN_GIVEAWAYS_KEY);
-        if (stored) setSeenIds(JSON.parse(stored));
-      }
-    } catch {}
-  }, []);
-
-  const newGiveaways = activeGiveaways.filter((g) => !seenIds.includes(g.id));
-
-  // App notifications (comment likes, replies, etc.) — derive unread count from the list
-  const { data: appNotifications = [], refetch: refetchNotifs } = useQuery({
-    queryKey: ["app-notifications"],
-    queryFn: fetchNotifications,
-    enabled: !!user,
-    refetchInterval: 120_000,
-  });
-  const notifUnread = appNotifications.filter((n) => !n.isRead).length;
-
-  const notifCount = newGiveaways.length + notifUnread;
+  // Notification and giveaway polling are disabled for now.
+  // Re-enable when the backend endpoints are ready.
+  const activeGiveaways: any[] = [];
+  const newGiveaways: any[] = [];
+  const appNotifications: any[] = [];
+  const notifUnread = 0;
+  const notifCount = 0;
 
   const openBell = () => {
-    const opening = !bellOpen;
     setBellOpen((o) => !o);
-    if (opening) {
-      if (newGiveaways.length > 0) {
-        const allIds = activeGiveaways.map((g) => g.id);
-        markAllSeen(allIds);
-        setSeenIds(allIds);
-      }
-      if (notifUnread > 0) {
-        fetch("/api/notifications/read-all", { method: "POST", credentials: "include" })
-          .then(() => refetchNotifs())
-          .catch(() => {});
-        queryClient.setQueryData(["app-notifications-unread"], 0);
-      }
-    }
   };
 
   // Close dropdowns on outside click
