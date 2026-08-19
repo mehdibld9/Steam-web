@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
 import { useLocation } from "wouter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -187,13 +187,31 @@ export default function EditProfile() {
     enabled: !!me,
   });
 
-  useEffect(() => {
-    if (!isLoading && !me) {
-      setLocation("/login");
-    }
-  }, [isLoading, me, setLocation]);
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-10 max-w-5xl">
+          <div className="rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground">
+            Loading profile…
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
-  if (isLoading || !me) return null;
+  if (!me) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-10 max-w-5xl">
+          <div className="rounded-xl border border-border bg-card p-8 text-center">
+            <h1 className="text-2xl font-black">Edit Profile</h1>
+            <p className="mt-3 text-sm text-muted-foreground">Please sign in to manage your profile.</p>
+            <Button className="mt-5" onClick={() => setLocation("/login")}>Go to login</Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   const isPremium = premiumStatus?.isActive && (premiumStatus.tier === "premium" || premiumStatus.tier === "pro");
   const isPro = premiumStatus?.isActive && premiumStatus.tier === "pro";
