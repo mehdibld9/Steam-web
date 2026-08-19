@@ -32,7 +32,7 @@ export default function Footer(): JSX.Element {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[#142638] bg-[#081827] text-[#dfeaf7]">
+    <footer className="border-t border-border bg-card text-foreground">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div>
@@ -158,7 +158,7 @@ export default function Footer(): JSX.Element {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-[#20324a] pt-7">
+        <div className="mt-10 border-t border-border pt-7">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-300">Follow Us</span>
@@ -190,7 +190,7 @@ export default function Footer(): JSX.Element {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-[#20324a] pt-6">
+        <div className="mt-8 border-t border-border pt-6">
           <p className="text-center text-sm text-slate-400">© {year} Steam Family. All rights reserved.</p>
         </div>
       </div>
