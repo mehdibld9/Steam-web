@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Camera, Lock, Trash2, CheckCircle2, AlertTriangle, User, ArrowLeft, Crown, Palette, ShieldCheck, ShieldOff, ImageIcon, Link2 } from "lucide-react";
+import { Camera, Lock, Trash2, Check, CheckCircle2, AlertTriangle, User, ArrowLeft, Crown, Palette, ShieldCheck, ShieldOff, ImageIcon, Link2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "wouter";
 import { UserBadge, BADGE_OPTIONS } from "@/components/user-badge";
