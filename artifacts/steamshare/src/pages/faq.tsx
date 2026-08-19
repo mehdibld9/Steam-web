@@ -31,12 +31,26 @@ export default function FAQPage(): JSX.Element {
               <li>Install the software and choose the game you want to run.</li>
               <li>Apply the fix, then launch the game.</li>
             </ol>
+            <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted/20">
+              <img
+                src="https://i.ibb.co/rRZ8brwK/image.png"
+                alt="Launcher fix example"
+                className="w-full max-w-[500px] mx-auto block object-cover"
+              />
+            </div>
             <p className="text-muted-foreground mt-3">Tip: not every game is supported.</p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold">4. I get a Steam login error.</h2>
-            <p className="text-muted-foreground">
+            <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted/20">
+              <img
+                src="https://cdn.appuals.com/wp-content/uploads/2025/03/Steam-error-code-e87.jpg"
+                alt="Steam error code example"
+                className="w-full max-w-[500px] mx-auto block object-cover"
+              />
+            </div>
+            <p className="text-muted-foreground mt-4">
               This is usually caused by one of two issues: too many users trying to log into the same account at once, or your IP being temporarily blocked after too many failed attempts.
             </p>
             <p className="text-muted-foreground">
